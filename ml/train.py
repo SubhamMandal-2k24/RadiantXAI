@@ -17,8 +17,8 @@ from ml.losses.weighted_bce import WeightedBCELoss, compute_pos_weights
 
 # ---- Config ----
 ROOT_DIR = "/kaggle/input/datasets/nih-chest-xrays/data"
-TRAIN_CSV = "data/splits/train.csv"
-VAL_CSV = "data/splits/val.csv"
+TRAIN_CSV = "/kaggle/working/RadiantXAI/data/splits/train.csv"
+VAL_CSV = "/kaggle/working/RadiantXAI/data/splits/val.csv"
 CHECKPOINT_PATH = "/kaggle/working/checkpoint.pth"
 BATCH_SIZE = 32
 NUM_EPOCHS = 2          # small run to start; increase later to continue
