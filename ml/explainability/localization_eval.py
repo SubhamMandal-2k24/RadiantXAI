@@ -24,6 +24,7 @@ different questions:
    chosen -- report the threshold used alongside the score.
 """
 
+import cv2
 import numpy as np
 import pandas as pd
 import torch
@@ -61,6 +62,13 @@ def load_bbox_data(bbox_csv_path: str) -> pd.DataFrame:
     }
     df = df.rename(columns=rename_map)
     df = df[["Image Index", "Finding Label", "x", "y", "w", "h"]]
+
+    # BBox_List_2017.csv uses "Infiltrate" but Data_Entry_2017.csv (and
+    # our LABELS list) uses "Infiltration" for the same finding -- without
+    # this, every Infiltrate annotation gets silently dropped by the
+    # `if label not in LABELS` check in evaluate_localization().
+    df["Finding Label"] = df["Finding Label"].replace({"Infiltrate": "Infiltration"})
+
     return df
 
 
@@ -176,6 +184,11 @@ def evaluate_localization(model, bbox_df: pd.DataFrame, image_path_lookup: dict,
         input_tensor = transform(image).unsqueeze(0).to(device)
 
         cam = cam_generator.generate(input_tensor, class_idx=class_idx)
+        # GradCAM.generate() returns the heatmap at the target layer's
+        # native spatial resolution (e.g. 7x7 for ResNet-50 layer4), but
+        # gt_box above was rescaled into MODEL_INPUT_SIZE (224x224)
+        # coordinates. Resize the CAM to match before comparing.
+        cam = cv2.resize(cam, (MODEL_INPUT_SIZE, MODEL_INPUT_SIZE))
 
         pred_box = cam_to_bbox(cam, threshold=iou_threshold)
         iou = compute_iou(pred_box, gt_box) if pred_box is not None else 0.0
