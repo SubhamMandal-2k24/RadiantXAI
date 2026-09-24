@@ -1,17 +1,22 @@
-# Use a slim Python base image to keep the container small
+# Build from the repo root:  docker build -f backend/Dockerfile .
 FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    RADIANTXAI_CHECKPOINT=/checkpoints/checkpoint.pth \
+    RADIANTXAI_OUTPUT_DIR=/tmp/radiantxai_outputs
 
 WORKDIR /app
 
-# Install dependencies first (separate layer, so Docker caches this
-# step and doesn't reinstall on every code change -- only reruns if
-# requirements.txt itself changes)
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# CPU-only torch keeps the image far smaller than the default CUDA wheels.
+RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
 
-# Now copy the actual application code
-COPY . .
+COPY backend/requirements.txt backend/requirements.txt
+RUN pip install --no-cache-dir -r backend/requirements.txt
+
+COPY backend/ backend/
+COPY ml/ ml/
 
 EXPOSE 8000
-
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--app-dir", "backend", "--host", "0.0.0.0", "--port", "8000"]
