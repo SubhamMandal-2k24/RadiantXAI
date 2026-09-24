@@ -8,6 +8,8 @@ from fastapi.staticfiles import StaticFiles
 from .routers import predict
 from .settings import CHECKPOINT_PATH, OUTPUT_DIR, use_mock
 
+logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger("radiantxai")
 
 
