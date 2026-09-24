@@ -12,12 +12,7 @@ import os
 import pandas as pd
 from PIL import Image
 from torch.utils.data import Dataset
-
-LABELS = [
-    "Atelectasis", "Cardiomegaly", "Effusion", "Infiltration", "Mass",
-    "Nodule", "Pneumonia", "Pneumothorax", "Consolidation", "Edema",
-    "Emphysema", "Fibrosis", "Pleural_Thickening", "Hernia",
-]
+from ml.labels import LABELS
 
 
 def build_image_path_lookup(root_dir: str) -> dict:

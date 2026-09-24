@@ -10,16 +10,13 @@ exactly one split.
 
 import pandas as pd
 from sklearn.model_selection import GroupShuffleSplit
+from ml.labels import LABELS
+
 
 RAW_CSV = "data/raw/Data_Entry_2017.csv"
 OUT_DIR = "data/splits"
 
 # The 14 official pathology labels (excludes "No Finding")
-LABELS = [
-    "Atelectasis", "Cardiomegaly", "Effusion", "Infiltration", "Mass",
-    "Nodule", "Pneumonia", "Pneumothorax", "Consolidation", "Edema",
-    "Emphysema", "Fibrosis", "Pleural_Thickening", "Hernia",
-]
 
 
 def load_and_encode(csv_path: str) -> pd.DataFrame:

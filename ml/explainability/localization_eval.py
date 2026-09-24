@@ -32,12 +32,8 @@ from PIL import Image
 from torchvision import transforms
 
 from ml.explainability.gradcam import GradCAM
+from ml.labels import LABELS
 
-LABELS = [
-    "Atelectasis", "Cardiomegaly", "Effusion", "Infiltration", "Mass",
-    "Nodule", "Pneumonia", "Pneumothorax", "Consolidation", "Edema",
-    "Emphysema", "Fibrosis", "Pleural_Thickening", "Hernia",
-]
 
 MODEL_INPUT_SIZE = 224
 

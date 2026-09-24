@@ -25,15 +25,11 @@ matplotlib.use("Agg")  # headless backend, no display needed
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from ml.labels import LABELS
 
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 PREDICTIONS_PATH = os.path.join(REPO_ROOT, "val_predictions.npz")
 
-LABELS = [
-    "Atelectasis", "Cardiomegaly", "Effusion", "Infiltration", "Mass",
-    "Nodule", "Pneumonia", "Pneumothorax", "Consolidation", "Edema",
-    "Emphysema", "Fibrosis", "Pleural_Thickening", "Hernia",
-]
 
 N_BINS = 10
 
