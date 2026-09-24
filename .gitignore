@@ -7,3 +7,6 @@ __pycache__/
 node_modules/
 *.onnx
 *.pth
+checkpoints/
+checkpoint.pth
+val_predictions.npz

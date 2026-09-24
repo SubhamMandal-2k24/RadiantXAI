@@ -1,0 +1,12 @@
+.git
+.github
+data/
+mlruns/
+notebooks/
+frontend/
+checkpoints/
+checkpoint.pth
+*.npz
+calibration_plots/
+**/__pycache__
+**/.pytest_cache
