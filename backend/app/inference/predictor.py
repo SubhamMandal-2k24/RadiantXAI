@@ -28,7 +28,7 @@ class InvalidImageError(ValueError):
 
 def _extract_state_dict(ckpt: dict) -> dict:
     """Checkpoint holds model+optimizer+scheduler+epoch; pull out the model weights."""
-    for key in ("model_state_dict", "model", "state_dict"):
+    for key in ("model_state", "model_state_dict", "model", "state_dict"):
         if isinstance(ckpt, dict) and key in ckpt:
             state = ckpt[key]
             break
