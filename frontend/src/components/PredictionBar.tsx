@@ -1,23 +1,26 @@
 ﻿import type { PathologyScore } from "../types/prediction";
+import { aucTier, AUC_BY_LABEL } from "../data/classMetrics";
 
-const HIGH_CONFIDENCE_THRESHOLD = 0.5;
+const TIER_COLOR: Record<string, string> = {
+  strong: "var(--color-finding)",
+  moderate: "var(--color-accent)",
+  weak: "#c2782e", // amber-ish, distinct from finding/accent
+};
 
 export function PredictionBar({ label, probability }: PathologyScore) {
   const pct = Math.round(probability * 100);
-  const isHigh = probability >= HIGH_CONFIDENCE_THRESHOLD;
+  const tier = aucTier(label);
+  const auc = AUC_BY_LABEL[label];
 
   return (
-    <div className="flex items-center gap-3 py-1.5">
+    <div className="flex items-center gap-3 py-1.5" title={`Model AUC-ROC for this class: ${auc.toFixed(3)}`}>
       <span className="w-36 shrink-0 truncate text-sm text-text" title={label}>
         {label.replace(/_/g, " ")}
       </span>
       <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-border">
         <div
           className="h-full rounded-full"
-          style={{
-            width: `${pct}%`,
-            backgroundColor: isHigh ? "var(--color-finding)" : "var(--color-accent)",
-          }}
+          style={{ width: `${pct}%`, backgroundColor: TIER_COLOR[tier] }}
         />
       </div>
       <span className="w-12 shrink-0 text-right font-mono text-xs text-text-dim">

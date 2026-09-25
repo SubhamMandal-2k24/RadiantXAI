@@ -11,6 +11,11 @@ export class ApiError extends Error {
   }
 }
 
+function toAbsoluteUrl(path: string): string {
+  if (/^https?:\/\//.test(path)) return path; // already absolute
+  return `${API_BASE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
+}
+
 export async function predictImage(file: File): Promise<PredictionResponse> {
   const formData = new FormData();
   formData.append("file", file);
@@ -39,5 +44,10 @@ export async function predictImage(file: File): Promise<PredictionResponse> {
     throw new ApiError(detail, response.status);
   }
 
-  return response.json();
+  const data: PredictionResponse = await response.json();
+  return {
+    ...data,
+    original_url: toAbsoluteUrl(data.original_url),
+    heatmap_url: toAbsoluteUrl(data.heatmap_url),
+  };
 }

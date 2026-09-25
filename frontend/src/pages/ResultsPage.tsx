@@ -1,5 +1,6 @@
 ﻿import { HeatmapOverlay } from "../components/HeatmapOverlay";
 import { PredictionBar } from "../components/PredictionBar";
+import { MethodologyNote } from "../components/MethodologyNote";
 import type { PredictionResponse } from "../types/prediction";
 
 interface ResultsPageProps {
@@ -25,7 +26,14 @@ export function ResultsPage({ result, onReset }: ResultsPageProps) {
       <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2">
         <div>
           <h2 className="mb-3 text-sm font-medium text-text-dim">Original vs. Grad-CAM localization</h2>
-          <HeatmapOverlay originalUrl={result.original_url} heatmapUrl={result.heatmap_url} />
+          {topFinding && (
+            <HeatmapOverlay
+              originalUrl={result.original_url}
+              heatmapUrl={result.heatmap_url}
+              topLabel={topFinding.label}
+            />
+          )}
+          <MethodologyNote />
         </div>
         <div>
           <h2 className="mb-3 text-sm font-medium text-text-dim">Pathology probabilities</h2>
