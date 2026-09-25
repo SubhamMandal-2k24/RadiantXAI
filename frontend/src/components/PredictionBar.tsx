@@ -2,9 +2,9 @@
 import { aucTier, AUC_BY_LABEL } from "../data/classMetrics";
 
 const TIER_COLOR: Record<string, string> = {
-  strong: "var(--color-finding)",
-  moderate: "var(--color-accent)",
-  weak: "#c2782e", // amber-ish, distinct from finding/accent
+  strong: "#3ba55d",   // green — high-AUC, trust this prediction
+  moderate: "var(--color-accent)", // teal — same accent used elsewhere for neutral/informational
+  weak: "#c2782e",     // amber — low-AUC, verify manually
 };
 
 export function PredictionBar({ label, probability }: PathologyScore) {
