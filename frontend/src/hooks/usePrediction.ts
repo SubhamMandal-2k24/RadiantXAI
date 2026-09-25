@@ -1,8 +1,9 @@
 ﻿import { useMutation } from "@tanstack/react-query";
-import { predictImage } from "../api/client";
+import { predictImage, ApiError } from "../api/client";
+import type { PredictionResponse } from "../types/prediction";
 
 export function usePrediction() {
-  return useMutation({
+  return useMutation<PredictionResponse, ApiError, File>({
     mutationFn: (file: File) => predictImage(file),
   });
 }
