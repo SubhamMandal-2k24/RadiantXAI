@@ -1,6 +1,7 @@
 ﻿import type { PredictionResponse } from "../types/prediction";
+import { loadSession } from "./authStorage";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
 
 export class ApiError extends Error {
   status: number;
@@ -20,10 +21,15 @@ export async function predictImage(file: File): Promise<PredictionResponse> {
   const formData = new FormData();
   formData.append("file", file);
 
+  const headers: Record<string, string> = {};
+  const session = loadSession();
+  if (session) headers.Authorization = `Bearer ${session.access_token}`;
+
   let response: Response;
   try {
     response = await fetch(`${API_BASE_URL}/predict`, {
       method: "POST",
+      headers,
       body: formData,
     });
   } catch {

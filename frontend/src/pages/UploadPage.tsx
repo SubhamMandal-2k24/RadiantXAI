@@ -1,5 +1,7 @@
-﻿import { UploadCard } from "../components/UploadCard";
+﻿import { useEffect } from "react";
+import { UploadCard } from "../components/UploadCard";
 import { usePrediction } from "../hooks/usePrediction";
+import { useAuth } from "../context/auth-context";
 import { ApiError } from "../api/client";
 import type { PredictionResponse } from "../types/prediction";
 
@@ -27,6 +29,12 @@ function errorMessage(error: Error): string {
 
 export function UploadPage({ onResult }: UploadPageProps) {
   const { mutate, isPending, error } = usePrediction();
+  const { logout } = useAuth();
+
+  // Session expired or token rejected: clear it so ProtectedRoute sends the user to /login.
+  useEffect(() => {
+    if (error?.status === 401) logout();
+  }, [error, logout]);
 
   function handleFile(file: File) {
     mutate(file, { onSuccess: onResult });
