@@ -2,8 +2,11 @@
 Pydantic schemas defining the API's request/response shapes.
 """
 
-from pydantic import BaseModel
 from typing import List
+
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
+
+from .models import UserRole
 
 
 class Prediction(BaseModel):
@@ -15,10 +18,6 @@ class PredictResponse(BaseModel):
     predictions: List[Prediction]
     heatmap_url: str
     original_url: str
-
-from pydantic import EmailStr, Field
-
-from .models import UserRole
 
 
 class SignupRequest(BaseModel):
@@ -40,9 +39,8 @@ class TokenResponse(BaseModel):
 
 
 class UserOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     email: EmailStr
     role: UserRole
-
-    class Config:
-        from_attributes = True
