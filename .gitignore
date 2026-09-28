@@ -10,3 +10,5 @@ node_modules/
 checkpoints/
 checkpoint.pth
 val_predictions.npz
+
+backend/radiantxai.db
