@@ -1,6 +1,8 @@
-from fastapi import APIRouter, File, HTTPException, Request, Response, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, Request, Response, UploadFile
 
+from ..dependencies import get_current_user
 from ..inference.predictor import InvalidImageError
+from ..models import User
 from ..settings import ALLOWED_CONTENT_TYPES, MAX_UPLOAD_BYTES, use_mock
 
 router = APIRouter()
@@ -23,7 +25,12 @@ def _mock_response() -> dict:
 
 
 @router.post("/predict")
-def predict(request: Request, response: Response, file: UploadFile = File(...)):
+def predict(
+    request: Request,
+    response: Response,
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_user),
+):
     if file.content_type not in ALLOWED_CONTENT_TYPES:
         raise HTTPException(status_code=415, detail="Only PNG and JPEG images are supported")
 

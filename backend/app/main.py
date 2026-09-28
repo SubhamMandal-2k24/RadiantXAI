@@ -5,7 +5,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from .routers import predict
+from .db import Base, engine
+from .routers import auth, predict
 from .settings import CHECKPOINT_PATH, OUTPUT_DIR, use_mock
 
 logging.basicConfig(level=logging.INFO)
@@ -15,6 +16,8 @@ logger = logging.getLogger("radiantxai")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+
     app.state.predictor = None
     if use_mock():
         logger.warning("RADIANTXAI_USE_MOCK is set: serving FAKE predictions")
@@ -41,6 +44,7 @@ app.add_middleware(
 )
 
 app.mount("/outputs", StaticFiles(directory=OUTPUT_DIR), name="outputs")
+app.include_router(auth.router)
 app.include_router(predict.router)
 
 

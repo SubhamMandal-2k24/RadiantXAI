@@ -19,3 +19,7 @@ ALLOWED_CONTENT_TYPES = {"image/png", "image/jpeg"}
 def use_mock() -> bool:
     """Mock mode is opt-in only. Never serve fake medical predictions by accident."""
     return os.environ.get("RADIANTXAI_USE_MOCK", "").lower() in {"1", "true", "yes"}
+
+JWT_SECRET_KEY = os.environ.get("RADIANTXAI_JWT_SECRET", "dev-secret-change-in-production")
+JWT_ALGORITHM = "HS256"
+JWT_EXPIRE_MINUTES = int(os.environ.get("RADIANTXAI_JWT_EXPIRE_MINUTES", "1440"))  # 24h
