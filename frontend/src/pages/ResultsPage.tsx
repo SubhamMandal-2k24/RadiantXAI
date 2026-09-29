@@ -1,6 +1,8 @@
 ﻿import { HeatmapOverlay } from "../components/HeatmapOverlay";
 import { PredictionBar } from "../components/PredictionBar";
 import { MethodologyNote } from "../components/MethodologyNote";
+import { GeneralSummary } from "../components/GeneralSummary";
+import { useAuth } from "../context/auth-context";
 import type { PredictionResponse } from "../types/prediction";
 
 interface ResultsPageProps {
@@ -9,8 +11,10 @@ interface ResultsPageProps {
 }
 
 export function ResultsPage({ result, onReset }: ResultsPageProps) {
+  const { role } = useAuth();
   const sorted = [...result.predictions].sort((a, b) => b.probability - a.probability);
   const topFinding = sorted[0];
+  const isTechnician = role === "technician";
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-10">
@@ -33,22 +37,28 @@ export function ResultsPage({ result, onReset }: ResultsPageProps) {
               topLabel={topFinding.label}
             />
           )}
-          <MethodologyNote />
+          {isTechnician && <MethodologyNote />}
         </div>
         <div>
-          <h2 className="mb-3 text-sm font-medium text-text-dim">Pathology probabilities</h2>
-          <div className="rounded-md border border-border bg-panel p-4">
-            {sorted.map((p) => (
-              <PredictionBar key={p.label} label={p.label} probability={p.probability} />
-            ))}
-          </div>
-          {topFinding && topFinding.probability >= 0.5 && (
-            <p className="mt-3 text-xs text-text-dim">
-              Highest-confidence finding: {topFinding.label.replace(/_/g, " ")} — the heatmap shows the regions the model weighted most.
-            </p>
-          )}
-          {result.model_version && (
-            <p className="mt-2 font-mono text-xs text-text-dim">model {result.model_version}</p>
+          {isTechnician ? (
+            <>
+              <h2 className="mb-3 text-sm font-medium text-text-dim">Pathology probabilities</h2>
+              <div className="rounded-md border border-border bg-panel p-4">
+                {sorted.map((p) => (
+                  <PredictionBar key={p.label} label={p.label} probability={p.probability} />
+                ))}
+              </div>
+              {topFinding && topFinding.probability >= 0.5 && (
+                <p className="mt-3 text-xs text-text-dim">
+                  Highest-confidence finding: {topFinding.label.replace(/_/g, " ")} — the heatmap shows the regions the model weighted most.
+                </p>
+              )}
+              {result.model_version && (
+                <p className="mt-2 font-mono text-xs text-text-dim">model {result.model_version}</p>
+              )}
+            </>
+          ) : (
+            <GeneralSummary predictions={sorted} />
           )}
         </div>
       </div>
