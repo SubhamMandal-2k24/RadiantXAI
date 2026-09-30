@@ -3,9 +3,9 @@ import { aucTier, AUC_BY_LABEL } from "../data/classMetrics";
 import { isFlagged, OPTIMAL_THRESHOLD } from "../data/thresholds";
 
 const TIER_COLOR: Record<string, string> = {
-  strong: "#3ba55d",   // green — high-AUC, trust this prediction
-  moderate: "var(--color-accent)", // teal — same accent used elsewhere for neutral/informational
-  weak: "#c2782e",     // amber — low-AUC, verify manually
+  strong: "var(--color-tier-strong)",     // teal: reliable
+  moderate: "var(--color-tier-moderate)", // slate blue: use with context
+  weak: "var(--color-tier-weak)",         // amber: verify manually
 };
 
 export function PredictionBar({ label, probability }: PathologyScore) {

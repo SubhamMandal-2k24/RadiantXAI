@@ -14,6 +14,10 @@
   --color-accent: #2bb3a3;
   --color-accent-dim: #1f7f76;
   --color-finding: #d9613f;
+
+  --color-tier-strong: #2bb3a3;
+  --color-tier-moderate: #6b8fb5;
+  --color-tier-weak: #c2782e;
 }
 
 @layer base {
