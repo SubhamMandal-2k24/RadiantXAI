@@ -4,6 +4,7 @@ const LINKS = [
   { label: "Email", value: SITE.email, href: `mailto:${SITE.email}` },
   { label: "LinkedIn", value: "Subham Mandal", href: SITE.linkedin },
   { label: "GitHub", value: "SubhamMandal-2k24", href: SITE.github },
+  { label: "Project repo", value: "RadiantXAI", href: SITE.repo },
 ];
 
 export function ContactPage() {
