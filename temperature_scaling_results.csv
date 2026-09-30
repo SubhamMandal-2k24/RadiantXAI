@@ -1,0 +1,15 @@
+label,ece_before,ece_after
+Atelectasis,0.13,0.13
+Cardiomegaly,0.0392,0.034
+Effusion,0.1222,0.1494
+Infiltration,0.2301,0.2561
+Mass,0.0598,0.0494
+Nodule,0.0861,0.0808
+Pneumonia,0.0246,0.0218
+Pneumothorax,0.0497,0.0378
+Consolidation,0.0711,0.0624
+Edema,0.0309,0.0275
+Emphysema,0.0252,0.0231
+Fibrosis,0.027,0.0241
+Pleural_Thickening,0.0535,0.0526
+Hernia,0.0012,0.0041
