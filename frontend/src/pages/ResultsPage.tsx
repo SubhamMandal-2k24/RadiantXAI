@@ -48,10 +48,11 @@ export function ResultsPage({ result, onReset }: ResultsPageProps) {
                   <PredictionBar key={p.label} label={p.label} probability={p.probability} />
                 ))}
               </div>
-              {topFinding && topFinding.probability >= 0.5 && (
-                <p className="mt-3 text-xs text-text-dim">
-                  Highest-confidence finding: {topFinding.label.replace(/_/g, " ")} — the heatmap shows the regions the model weighted most.
-                </p>
+                {topFinding && (
+                  <p className="mt-3 text-xs text-text-dim">
+                    Highest-confidence finding: {topFinding.label.replace(/_/g, " ")} — the heatmap shows the regions the model weighted most.
+                    Each row's flag threshold is tuned per class (F1-optimized on the validation set), not a flat 50%.
+                  </p>
               )}
               {result.model_version && (
                 <p className="mt-2 font-mono text-xs text-text-dim">model {result.model_version}</p>
