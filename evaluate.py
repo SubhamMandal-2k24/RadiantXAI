@@ -37,7 +37,7 @@ from ml.datasets.chestxray_dataset import ChestXrayDataset, LABELS
 # ---- Paths (matches train.py's convention -- override via env vars if needed) ----
 ROOT_DIR = os.environ.get("RADIANTXAI_ROOT_DIR", "/kaggle/input/datasets/nih-chest-xrays/data")
 VAL_CSV = os.environ.get("RADIANTXAI_VAL_CSV", os.path.join(REPO_ROOT, "data", "splits", "val.csv"))
-CHECKPOINT_PATH = os.environ.get("RADIANTXAI_CHECKPOINT", os.path.join(REPO_ROOT, "checkpoint.pth"))
+CHECKPOINT_PATH = os.environ.get("RADIANTXAI_CHECKPOINT", os.path.join(REPO_ROOT, "checkpoints", "checkpoint.pth"))
 
 BATCH_SIZE = 32
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")

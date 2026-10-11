@@ -27,7 +27,7 @@ from ml.explainability.localization_eval import (
 )
 
 # ---- Paths (adjust here if your local layout differs) ----
-CHECKPOINT_PATH = os.path.join(REPO_ROOT, "checkpoint.pth")
+CHECKPOINT_PATH = os.path.join(REPO_ROOT, "checkpoints", "checkpoint.pth")
 BBOX_CSV_PATH = os.path.join(REPO_ROOT, "data", "bbox_eval", "BBox_List_2017.csv")
 IMAGES_DIR = os.path.join(REPO_ROOT, "data", "bbox_eval", "bbox_images")
 
@@ -66,7 +66,7 @@ def main():
     if not os.path.exists(CHECKPOINT_PATH):
         raise FileNotFoundError(
             f"Checkpoint not found at {CHECKPOINT_PATH}. "
-            f"Place checkpoint.pth at the repo root, or edit CHECKPOINT_PATH above."
+            f"Place checkpoint.pth in the checkpoints folder, or edit CHECKPOINT_PATH above."
         )
     if not os.path.exists(BBOX_CSV_PATH):
         raise FileNotFoundError(f"BBox CSV not found at {BBOX_CSV_PATH}.")
