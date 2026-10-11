@@ -1,32 +1,25 @@
-# React + TypeScript + Vite
+# RadiantXAI frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This is the web app for RadiantXAI. You sign up, upload a chest X-ray, and it shows the model's predictions for 14 pathologies along with a Grad-CAM heatmap of where the model looked. Technicians get the full technical view, and general users get a plain-language summary.
 
-Currently, two official plugins are available:
+It's built with React (JavaScript) and Vite, styled with Tailwind CSS. React Router handles navigation, TanStack Query handles the API calls, and Motion handles the animations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Running it
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+The FastAPI backend (port 8000) needs to be running too, otherwise uploads will fail.
+
+## Scripts
+
+- `npm run dev` starts the dev server
+- `npm run build` makes a production build in `dist`
+- `npm run lint` runs oxlint
+- `npm run preview` serves the production build locally
+
+## Structure
+
+Everything lives in `src`: `api` (backend calls), `components`, `config`, `context` (auth), `data` (class metrics and thresholds), `hooks`, and `pages`.
