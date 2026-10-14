@@ -94,7 +94,7 @@
   }
   body {
     margin: 0;
-    font-family: var(--font-sans);
+    font-family: "DM Sans", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   ::selection {

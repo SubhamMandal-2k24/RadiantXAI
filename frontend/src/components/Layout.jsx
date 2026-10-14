@@ -4,11 +4,6 @@ function Footer() {
     return (<footer className="relative z-10 border-t border-border">
       <div className="mx-auto max-w-6xl px-6 py-6 text-xs text-text-dim">
         <p>© {new Date().getFullYear()} RadiantXAI. Research prototype.</p>
-        <p className="mt-1">
-          Not a medical device. Results are not a diagnosis and are not a substitute for professional
-          medical advice.
-        </p>
-        <p className="mt-1">Sample images: NIH Clinical Center ChestX-ray14.</p>
       </div>
     </footer>);
 }
